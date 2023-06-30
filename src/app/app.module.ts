@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from "@angular/common/http";
+import {AppHeaderComponent} from "./app-header/app-header.component";
 
 
 @NgModule({
@@ -13,6 +14,6 @@ import { HttpClientModule } from "@angular/common/http";
   ],
   providers: [],
   bootstrap: [AppComponent],
-  imports: [BrowserAnimationsModule, MatSliderModule, LoginComponent, HttpClientModule]
+  imports: [BrowserAnimationsModule, MatSliderModule, LoginComponent, HttpClientModule, AppHeaderComponent]
 })
 export class AppModule { }

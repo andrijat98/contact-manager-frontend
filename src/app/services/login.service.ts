@@ -8,16 +8,14 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  requestHeader = new HttpHeaders(
-    { 'Content-Type': 'multipart/form-data' }
-  );
-
   public login(loginData:any) {
 
-    const formData: FormData = new FormData();
-    formData.append('username', loginData.username)
-    formData.append('password', loginData.password)
+    const credentials = loginData.username + ":" + loginData.password;
 
-    return this.http.post("http://localhost:8080/login", formData, {withCredentials: true});
+    const requestHeader = new HttpHeaders(
+      {'Authorization': 'Basic ' + btoa(credentials)}
+    );
+
+    return this.http.get("http://localhost:8080/login", {headers: requestHeader});
   }
 }

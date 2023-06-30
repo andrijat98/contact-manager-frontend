@@ -1,0 +1,13 @@
+.login, .logout{
+  display: flex;
+  align-items: center;
+}
+.login:hover, .logout:hover {
+  cursor: pointer;
+}
+.icon {
+  padding: 0 14px;
+}
+.spacer {
+  flex: 1 1 auto;
+}

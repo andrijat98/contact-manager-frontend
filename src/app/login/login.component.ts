@@ -8,6 +8,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {LoginService} from "../services/login.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {User} from "../interfaces/user.interface";
 
 @Component({
   selector: 'app-login',
@@ -23,11 +24,22 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  loggedInUser: User = {} as User;
+
   onSubmit(loginForm: NgForm) {
     this.loginService.login(loginForm.value).subscribe(
       {
         next: (response: any) => {
           console.log('Login successful');
+          this.loggedInUser.tsid = response.tsid;
+          this.loggedInUser.firstName = response.firstName;
+          this.loggedInUser.lastName = response.lastName;
+          this.loggedInUser.email = response.email;
+          this.loggedInUser.roles = [];
+          for (let role of response.roles) {
+            this.loggedInUser.roles.push(role.roleName);
+          }
+          console.log(this.loggedInUser);
         },
         error: (error: HttpErrorResponse) => {
           alert(error.message)
