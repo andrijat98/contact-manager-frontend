@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
   onSubmit(loginForm: NgForm) {
     this.loginService.login(loginForm.value).subscribe(
       {
-        next: (response:any) => {
-          console.log('Login successful')
+        next: (response: any) => {
+          console.log('Login successful');
         },
         error: (error: HttpErrorResponse) => {
           alert(error.message)

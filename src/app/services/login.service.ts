@@ -18,6 +18,6 @@ export class LoginService {
     formData.append('username', loginData.username)
     formData.append('password', loginData.password)
 
-    return this.http.post("http://localhost:8080/login", formData);
+    return this.http.post("http://localhost:8080/login", formData, {withCredentials: true});
   }
 }
