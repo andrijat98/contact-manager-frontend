@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   public setRequestHeader(value: HttpHeaders) {
     this.requestHeader = value;
-    console.log("request header is now: " + this.requestHeader.keys())
   }
 
   constructor() {
