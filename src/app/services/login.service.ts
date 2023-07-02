@@ -8,14 +8,8 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  public login(loginData:any) {
+  public login(loginData:any, authHeader:HttpHeaders) {
 
-    const credentials = loginData.username + ":" + loginData.password;
-
-    const requestHeader = new HttpHeaders(
-      {'Authorization': 'Basic ' + btoa(credentials)}
-    );
-
-    return this.http.get("http://localhost:8080/login", {headers: requestHeader});
+    return this.http.get("http://localhost:8080/login", {headers: authHeader});
   }
 }

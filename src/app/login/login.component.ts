@@ -7,8 +7,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {LoginService} from "../services/login.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {User} from "../interfaces/user.interface";
+import {AuthInterceptor} from "../auth/auth.interceptor";
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ import {User} from "../interfaces/user.interface";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private authInterceptor: AuthInterceptor) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +28,12 @@ export class LoginComponent implements OnInit {
   loggedInUser: User = {} as User;
 
   onSubmit(loginForm: NgForm) {
-    this.loginService.login(loginForm.value).subscribe(
+
+    const credentials = loginForm.value.username + ":" + loginForm.value.password;
+    const requestHeader = new HttpHeaders(
+      {'Authorization': 'Basic ' + btoa(credentials)}
+    );
+    this.loginService.login(loginForm.value, requestHeader).subscribe(
       {
         next: (response: any) => {
           console.log('Login successful');
@@ -39,6 +45,7 @@ export class LoginComponent implements OnInit {
           for (let role of response.roles) {
             this.loggedInUser.roles.push(role.roleName);
           }
+          this.authInterceptor.setRequestHeader(requestHeader)
           console.log(this.loggedInUser);
         },
         error: (error: HttpErrorResponse) => {
