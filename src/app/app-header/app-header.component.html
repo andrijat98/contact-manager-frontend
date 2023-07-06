@@ -3,12 +3,15 @@
     <mat-toolbar-row>
       <span>Contact Manager App</span>
       <span class="spacer"></span>
-      <div class="login">
+      <div *ngIf="loggedInUser.isLoggedIn" class="welcome">
+        <span>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }}</span>
+      </div>
+      <div *ngIf="!loggedInUser.isLoggedIn" class="login" routerLink="/login">
         <span>Login</span>
         <mat-icon class="icon" aria-hidden="false" aria-label="Login icon">login</mat-icon>
       </div>
-      <div class="logout">
-        <span>Logout</span>
+      <div *ngIf="loggedInUser.isLoggedIn" class="logout" (click)="onLogout()">
+        <span>(Logout)</span>
         <mat-icon class="icon" aria-hidden="false" aria-label="Logout icon">logout</mat-icon>
       </div>
     </mat-toolbar-row>

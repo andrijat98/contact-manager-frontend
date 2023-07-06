@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Add contact</h2>
+<mat-dialog-content class="mat-typography">
+  <form #addContactForm="ngForm">
+    <table class="full-width">
+      <tr>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" id="firstName" ngModel name="firstName">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" id="lastName" ngModel name="lastName">
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput type="text" id="address" ngModel name="address">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Phone Number</mat-label>
+      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Contact type</mat-label>
+      <mat-select id="contactType" ngModel name="contactTypeTsid">
+        <mat-option [value]="'463974017576525434'">Company</mat-option>
+        <mat-option [value]="'463974017576525434'">Home</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close="">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit(addContactForm)">Submit</button>
+</mat-dialog-actions>

@@ -1,0 +1,48 @@
+.mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+.contact-panel {
+  width: 80%;
+  margin: 50px auto;
+}
+
+#add-contact {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: darkblue;
+  margin-left: auto;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+#add-contact-text {
+  font-size: 1.2em;
+}
+
+.header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: darkgray;
+  font-size: 1.2em;
+}
+
+#name {
+  padding-left: 23px;
+}
+
+#action {
+  padding-right: 23px;
+}
+
+#dummy1 {
+  width: 28%;
+}
+#dummy2 {
+  width: 54.5%;
+}

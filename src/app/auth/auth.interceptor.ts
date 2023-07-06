@@ -3,39 +3,29 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor, HttpHeaders
+  HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {LoginService} from "../services/login.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptor implements HttpInterceptor {
 
-  private requestHeader:HttpHeaders = new HttpHeaders();
+  constructor(private loginService: LoginService) {}
 
-  public getRequestHeader(): HttpHeaders {
-    return this.requestHeader;
-  }
-
-  public setRequestHeader(value: HttpHeaders) {
-    this.requestHeader = value;
-  }
-
-  constructor() {
-
-  }
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(!request.headers.has('Authorization') ) {
-
-      const header = this.getRequestHeader().get('Authorization');
-      if(header) {
+      console.log("Request doesn't have auth header")
+      console.log(this.loginService.requestHeader)
+      const authorization = this.loginService.requestHeader.get('Authorization');
+      //console.log(authorization);
+      if(authorization) {
         request = request.clone(
           {
             setHeaders: {
-              Authorization : header
+              Authorization : authorization
             }
           }
         );
