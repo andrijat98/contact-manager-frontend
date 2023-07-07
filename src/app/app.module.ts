@@ -22,6 +22,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {AuthGuard} from "./auth/auth.guard";
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     AppComponent,
     AddContactDialog,
     EditContactDialog,
-    DeleteContactDialog
+    DeleteContactDialog,
+    AdminPanelComponent
   ],
   providers: [
     {

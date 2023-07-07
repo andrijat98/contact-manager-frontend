@@ -34,9 +34,7 @@ export class LoginService {
           }
           this.loggedInUser.isLoggedIn = true;
           this.requestHeader = requestHeader
-          this.router.navigate(['/contacts']).then(() => {
-            }
-          )
+          this.router.navigate(['/contacts']).then()
         },
         error: (error: HttpErrorResponse) => {
           console.log(error.message)
@@ -49,5 +47,10 @@ export class LoginService {
     this.requestHeader = new HttpHeaders();
     this.loggedInUser.isLoggedIn = false;
     this.loggedInUser = {} as User;
+    this.router.navigate(['/login']).then();
+  }
+
+  public checkIfAdmin(): boolean {
+    return this.loggedInUser.roles.includes('ROLE_ADMIN')
   }
 }
