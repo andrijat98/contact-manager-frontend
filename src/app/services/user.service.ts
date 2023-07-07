@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../interfaces/user.interface";
-import {ModifyUserInterface} from "../interfaces/modify-user.interface";
+import {ModifyUser} from "../interfaces/modify.user.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,6 @@ export class UserService {
   }
 
   public addUser(user: FormData) {
-    return this.http.post<ModifyUserInterface>(`${this.serverUrl}/user/add`, user);
+    return this.http.post<ModifyUser>(`${this.serverUrl}/user/add`, user);
   }
 }

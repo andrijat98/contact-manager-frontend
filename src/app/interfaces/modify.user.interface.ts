@@ -1,4 +1,4 @@
-export interface ModifyUserInterface {
+export interface ModifyUser {
   tsid: number;
   firstName: string;
   lastName: string;
