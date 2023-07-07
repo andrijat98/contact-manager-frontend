@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Contact} from "../interfaces/contact.interface";
+import {ContactType} from "../interfaces/contact-type.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,17 @@ export class ContactService {
 
   public addContact(contact: FormData) {
     return this.http.post<Contact>(`${this.serverUrl}/contact/add`, contact);
+  }
+
+  public editContact(contact: FormData) {
+    return this.http.put<Contact>(`${this.serverUrl}/contact/edit`, contact);
+  }
+
+  public getContactTypes(): Observable<ContactType[]> {
+    return this.http.get<ContactType[]>(`${this.serverUrl}/contact-type/get-all`);
+  }
+
+  public deleteContact(contactTsid: string): Observable<any> {
+    return this.http.delete(`${this.serverUrl}/contact/delete/${contactTsid}`);
   }
 }

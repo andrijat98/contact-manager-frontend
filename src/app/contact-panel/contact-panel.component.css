@@ -11,15 +11,12 @@
   display: flex;
   align-items: center;
   text-align: center;
-  color: darkblue;
   margin-left: auto;
   justify-content: flex-end;
   padding-bottom: 10px;
-  padding-right: 5px;
-  cursor: pointer;
 }
 
-#add-contact-text {
+.add-contact-text {
   font-size: 1.2em;
 }
 
@@ -45,4 +42,16 @@
 }
 #dummy2 {
   width: 54.5%;
+}
+
+.bolded-text {
+  font-weight: bold;
+}
+
+#mat-icon {
+  margin-right: 8px;
+}
+
+#add-icon {
+  padding-right: 3px;
 }

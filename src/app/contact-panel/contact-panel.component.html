@@ -1,7 +1,9 @@
 <div class="contact-panel">
-  <div id="add-contact" (click)="openDialog()">
-    <mat-icon>add</mat-icon>
-    <span id="add-contact-text">Add contact</span>
+  <div id="add-contact">
+    <button class="add-contact-text" mat-raised-button color="primary" (click)="openAddDialog()">
+      <mat-icon id="add-icon">add</mat-icon>
+      <span>Add contact</span>
+    </button>
   </div>
   <header class="header">
     <span class="item" id="name">Name</span>
@@ -20,15 +22,15 @@
           {{ contact.phoneNumber }}
         </mat-panel-description>
         <div>
-          <mat-icon>edit</mat-icon>
-          <mat-icon>delete</mat-icon>
+          <mat-icon id="mat-icon" (click)="openEditDialog(contact)">edit</mat-icon>
+          <mat-icon (click)="openDeleteDialog(contact)">delete</mat-icon>
         </div>
-      </mat-expansion-panel-header>
-      <p><span>First name: </span> {{ contact.firstName }}</p>
-      <p><span>Last name: </span> {{ contact.lastName }}</p>
-      <p><span>Address: </span> {{ contact.address }}</p>
-      <p><span>Phone number: </span> {{ contact.phoneNumber }}</p>
-      <p><span>Contact type: </span> {{ contact.contactType }}</p>
+      </mat-expansion-panel-header><hr/>
+      <p><span class="bolded-text">First name: </span> {{ contact.firstName }}</p><hr/>
+      <p><span class="bolded-text">Last name: </span> {{ contact.lastName }}</p><hr/>
+      <p><span class="bolded-text">Address: </span> {{ contact.address }}</p><hr/>
+      <p><span class="bolded-text">Phone number: </span> {{ contact.phoneNumber }}</p><hr/>
+      <p><span class="bolded-text">Contact type: </span> {{ contact.contactType }}</p><hr/>
     </mat-expansion-panel>
   </mat-accordion>
   <mat-paginator [length]="100"

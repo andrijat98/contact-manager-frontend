@@ -7,7 +7,12 @@ import { LoginComponent } from './login/login.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AppHeaderComponent} from "./app-header/app-header.component";
 import {RouterModule, Routes} from "@angular/router";
-import {AddContactDialog, ContactPanelComponent} from './contact-panel/contact-panel.component';
+import {
+  AddContactDialog,
+  ContactPanelComponent,
+  DeleteContactDialog,
+  EditContactDialog
+} from './contact-panel/contact-panel.component';
 import {AuthInterceptor} from "./auth/auth.interceptor";
 
 import {MatDialogModule} from "@angular/material/dialog";
@@ -16,17 +21,20 @@ import {FormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
+import {AuthGuard} from "./auth/auth.guard";
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'contacts', component: ContactPanelComponent },
+  { path: 'contacts', component: ContactPanelComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddContactDialog
+    AddContactDialog,
+    EditContactDialog,
+    DeleteContactDialog
   ],
   providers: [
     {

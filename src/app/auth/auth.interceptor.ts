@@ -17,8 +17,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(!request.headers.has('Authorization') ) {
-      console.log("Request doesn't have auth header")
-      console.log(this.loginService.requestHeader)
+      //console.log("Request doesn't have auth header")
+      //console.log(this.loginService.requestHeader)
       const authorization = this.loginService.requestHeader.get('Authorization');
       //console.log(authorization);
       if(authorization) {

@@ -1,40 +1,40 @@
-<h2 mat-dialog-title>Add contact</h2>
 <mat-dialog-content class="mat-typography">
-  <form #addContactForm="ngForm">
+  <form #updateContactForm="ngForm">
     <table class="full-width">
       <tr>
         <td>
           <mat-form-field class="full-width" appearance="fill">
             <mat-label>First Name</mat-label>
-            <input matInput type="text" id="firstName" ngModel name="firstName">
+            <input matInput type="text" id="firstName" ngModel name="firstName" [(ngModel)]="data.firstName">
           </mat-form-field>
         </td>
         <td>
           <mat-form-field class="full-width" appearance="fill">
             <mat-label>Last Name</mat-label>
-            <input matInput type="text" id="lastName" ngModel name="lastName">
+            <input matInput type="text" id="lastName" ngModel name="lastName" [(ngModel)]="data.lastName">
           </mat-form-field>
         </td>
       </tr>
     </table>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Address</mat-label>
-      <input matInput type="text" id="address" ngModel name="address">
+      <input matInput type="text" id="address" ngModel name="address" [(ngModel)]="data.address">
     </mat-form-field>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Phone Number</mat-label>
-      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber">
+      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber" [(ngModel)]="data.phoneNumber">
     </mat-form-field>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Contact type</mat-label>
-      <mat-select id="contactType" ngModel name="contactTypeTsid">
+      <mat-select id="contactType" ngModel name="contactTypeTsid" [(ngModel)] = data.contactTypeTsid>
         <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.tsid">{{ contactType.type }}</mat-option>
       </mat-select>
     </mat-form-field>
+      <input type="hidden" id="contactTsid" ngModel name="contactTsid" [(ngModel)]="data.contactTsid">
   </form>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close="">Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit(addContactForm)">Submit</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit(updateContactForm)">Submit</button>
 </mat-dialog-actions>
