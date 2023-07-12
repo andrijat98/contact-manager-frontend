@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../interfaces/user.interface";
-import {ModifyUser} from "../interfaces/modify.user.interface";
+import {UserRole} from "../interfaces/userRole.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,18 @@ export class UserService {
   }
 
   public addUser(user: FormData) {
-    return this.http.post<ModifyUser>(`${this.serverUrl}/user/add`, user);
+    return this.http.post<User>(`${this.serverUrl}/user/add`, user);
+  }
+
+  public updateUser(editUserData: FormData) {
+    return this.http.put<User>(`${this.serverUrl}/user/edit`, editUserData);
+  }
+
+  public deleteUser(userTsid: string): Observable<any> {
+    return this.http.delete(`${this.serverUrl}/user/delete/${userTsid}`);
+  }
+
+  public getAllUserRoles(): Observable<UserRole[]> {
+    return this.http.get<UserRole[]>(`${this.serverUrl}/user/get-roles`);
   }
 }

@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Add contact types</h2>
+<mat-dialog-content class="mat-typography">
+  <form #addContactTypeForm="ngForm">
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Contact type</mat-label>
+      <input matInput type="text" id="contactType" ngModel name="type">
+    </mat-form-field>
+  </form>
+  <h2 id="currently-added">Currently added:</h2>
+  <div class="contact-type-list">
+    <p class="contact-types" *ngFor="let contactType of contactTypes">{{contactType.type}}</p>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close="">Close</button>
+  <button mat-raised-button color="primary" cdkFocusInitial (click)="onSubmit(addContactTypeForm)">Submit</button>
+</mat-dialog-actions>

@@ -32,4 +32,8 @@ export class ContactService {
   public deleteContact(contactTsid: string): Observable<any> {
     return this.http.delete(`${this.serverUrl}/contact/delete/${contactTsid}`);
   }
+
+  public addContactType(contactType: FormData) {
+    return this.http.post<ContactType>(`${this.serverUrl}/contact-type/add`, contactType);
+  }
 }

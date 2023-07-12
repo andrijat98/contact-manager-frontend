@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Add user</h2>
+<mat-dialog-content class="mat-typography">
+  <form #addUserForm="ngForm">
+    <table class="full-width">
+      <tr>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" id="firstName" ngModel name="firstName">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" id="lastName" ngModel name="lastName">
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="text" id="email" ngModel name="email">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" id="password" ngModel name="password">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Phone Number</mat-label>
+      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber">
+    </mat-form-field>
+      <mat-label>Select user roles</mat-label>
+      <ul>
+        <li *ngFor="let role of userRoles">
+          <mat-checkbox [checked]="role.selected" (change)="role.selected = !role.selected">{{role.roleName}}</mat-checkbox>
+        </li>
+      </ul>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close="">Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit(addUserForm)">Submit</button>
+</mat-dialog-actions>

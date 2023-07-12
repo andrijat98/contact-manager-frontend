@@ -28,13 +28,14 @@ export class LoginService {
           this.loggedInUser.firstName = response.firstName;
           this.loggedInUser.lastName = response.lastName;
           this.loggedInUser.email = response.email;
-          this.loggedInUser.roles = [];
-          for (let role of response.roles) {
-            this.loggedInUser.roles.push(role.roleName);
-          }
+          this.loggedInUser.roles = response.roles;
           this.loggedInUser.isLoggedIn = true;
-          this.requestHeader = requestHeader
-          this.router.navigate(['/contacts']).then()
+          this.requestHeader = requestHeader;
+          if(this.checkIfAdmin()) {
+            this.router.navigate(['/users']).then()
+          } else {
+            this.router.navigate(['/contacts']).then()
+          }
         },
         error: (error: HttpErrorResponse) => {
           console.log(error.message)
@@ -51,6 +52,15 @@ export class LoginService {
   }
 
   public checkIfAdmin(): boolean {
-    return this.loggedInUser.roles.includes('ROLE_ADMIN')
+    let isAdmin: boolean = false;
+    if (this.loggedInUser.roles == undefined) {
+      return false;
+    }
+    this.loggedInUser.roles.forEach(role => {
+      if(role.roleName === 'ROLE_ADMIN') {
+        isAdmin = true;
+      }
+    })
+    return isAdmin;
   }
 }

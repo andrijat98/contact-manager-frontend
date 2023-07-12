@@ -22,12 +22,20 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {AuthGuard} from "./auth/auth.guard";
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import {
+  AddUserDialog,
+  AdminPanelComponent,
+  DeleteUserDialog,
+  EditUserDialog,
+  ContactTypesDialog
+} from './admin-panel/admin-panel.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'contacts', component: ContactPanelComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent }
+  { path: 'contacts', component: ContactPanelComponent, canActivate: [AuthGuard], data: {requiresLogin: true} },
+  { path: 'login', component: LoginComponent },
+  { path: 'users', component: AdminPanelComponent, canActivate: [AuthGuard], data: {requiresAdmin: true}}
 ];
 
 @NgModule({
@@ -36,7 +44,10 @@ const appRoutes: Routes = [
     AddContactDialog,
     EditContactDialog,
     DeleteContactDialog,
-    AdminPanelComponent
+    EditUserDialog,
+    DeleteUserDialog,
+    AddUserDialog,
+    ContactTypesDialog
   ],
   providers: [
     {
@@ -60,7 +71,9 @@ const appRoutes: Routes = [
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    AdminPanelComponent,
+    MatCheckboxModule,
   ]
 })
 export class AppModule { }

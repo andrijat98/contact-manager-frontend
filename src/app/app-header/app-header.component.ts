@@ -22,6 +22,7 @@ export class AppHeaderComponent implements OnInit {
 
   onLogout() {
     this.loginService.logout();
+    this.loggedInUser = this.loginService.loggedInUser;
     console.log("Logged out");
   }
 

@@ -1,1 +1,49 @@
-<p>admin-panel works!</p>
+<div class="contact-panel">
+  <div id="button-panel">
+    <button class="add-contact-text" id="add-user-button" mat-raised-button color="primary" (click)="openAddDialog()">
+      <mat-icon class="add-icon">add</mat-icon>
+      <span>Add user</span>
+    </button>
+    <button class="add-contact-text" mat-raised-button color="primary" (click)="openAddContactTypeDialog()">
+      <mat-icon class="add-icon">add</mat-icon>
+      <span>Add contact type</span>
+    </button>
+  </div>
+  <header class="header">
+    <span class="item" id="name">Name</span>
+    <span id="dummy1"></span>
+    <span class="item" id="number">Email</span>
+    <span id="dummy2"></span>
+    <span class="item" id="action"><b>Action</b></span>
+  </header>
+  <mat-accordion *ngFor="let user of users">
+    <mat-expansion-panel class="contact-list" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ user.firstName }} {{ user.lastName }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ user.email }}
+        </mat-panel-description>
+        <div>
+          <mat-icon id="mat-icon" (click)="openEditDialog(user)">edit</mat-icon>
+          <mat-icon (click)="openDeleteDialog(user)">delete</mat-icon>
+        </div>
+      </mat-expansion-panel-header><hr/>
+      <p><span class="bolded-text">First name: </span> {{ user.firstName }}</p><hr/>
+      <p><span class="bolded-text">Last name: </span> {{ user.lastName }}</p><hr/>
+      <p><span class="bolded-text">Address: </span> {{ user.email }}</p><hr/>
+      <p><span class="bolded-text">Phone number: </span> {{ user.phoneNumber }}</p><hr/>
+      <span><span class="bolded-text">Roles: </span></span>
+      <div style="display: inline" *ngFor="let role of user.roles">
+        <span>{{ role.roleName }}; </span>
+      </div>
+      <hr/>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-paginator [length]="100"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 50]"
+                 aria-label="Select page">
+  </mat-paginator>
+</div>

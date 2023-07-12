@@ -1,8 +1,11 @@
+import {UserRole} from "./userRole.interface";
+
 export interface User {
-  tsid: number;
+  tsid: string;
   firstName: string;
   lastName: string;
   email: string;
-  roles: string[];
+  phoneNumber: string;
+  roles: UserRole[];
   isLoggedIn: boolean;
 }
