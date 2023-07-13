@@ -30,6 +30,7 @@ import {
   ContactTypesDialog
 } from './admin-panel/admin-panel.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -74,6 +75,7 @@ const appRoutes: Routes = [
     MatSelectModule,
     AdminPanelComponent,
     MatCheckboxModule,
+    MatSnackBarModule
   ]
 })
 export class AppModule{

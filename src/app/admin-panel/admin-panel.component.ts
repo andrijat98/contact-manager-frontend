@@ -12,6 +12,7 @@ import {NgForm} from "@angular/forms";
 import {UserRole} from "../interfaces/userRole.interface";
 import {ContactService} from "../services/contact.service";
 import {ContactType} from "../interfaces/contact-type.interface";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-admin-panel',
@@ -30,7 +31,7 @@ export class AdminPanelComponent implements OnInit {
 
   public users: User[] = [];
 
-  constructor(private userService: UserService, private dialog: MatDialog) { }
+  constructor(private userService: UserService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getAllUsers();
@@ -43,7 +44,9 @@ export class AdminPanelComponent implements OnInit {
           this.users = result;
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     )
@@ -99,7 +102,7 @@ export class AddUserDialog implements OnInit{
 
   userRoles: UserRole[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getAllUserRoles();
@@ -113,7 +116,9 @@ export class AddUserDialog implements OnInit{
           this.userRoles.forEach(role => role.selected = false);
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     )
@@ -129,14 +134,19 @@ export class AddUserDialog implements OnInit{
       }
     })
     formValue.userRoleTsids = userRoleTsids;
-    console.log(formValue);
     this.userService.addUser(formValue).subscribe(
       {
         next: (response: User) => {
-          console.log(response)
+          this.snackBar.open('User ' + response.firstName + ' added', 'Close', {
+            duration: 1500
+          })
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          const keys = Object.keys(error.error);
+          const errorMessage = error.error[keys[keys.length - 1]];
+          this.snackBar.open(errorMessage, 'Close', {
+            duration: 5000
+          })
         }
       }
     );
@@ -152,7 +162,7 @@ export class EditUserDialog implements OnInit{
 
   userRoles: UserRole[] = [];
 
-  constructor(private userService: UserService, @Inject(MAT_DIALOG_DATA) public data: User) { }
+  constructor(private userService: UserService, @Inject(MAT_DIALOG_DATA) public data: User, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getAllUserRoles();
@@ -171,10 +181,11 @@ export class EditUserDialog implements OnInit{
             }
           })
           });
-          //console.log(this.userRoles)
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     )
@@ -194,11 +205,16 @@ export class EditUserDialog implements OnInit{
     this.userService.updateUser(formValue).subscribe(
       {
         next: (response: User) => {
-          console.log("updated user")
-          console.log(response)
+          this.snackBar.open('User ' + response.firstName + ' updated', 'Close', {
+            duration: 1500
+          })
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          const keys = Object.keys(error.error);
+          const errorMessage = error.error[keys[keys.length - 1]];
+          this.snackBar.open(errorMessage, 'Close', {
+            duration: 5000
+          })
         }
       }
     );
@@ -212,18 +228,21 @@ export class EditUserDialog implements OnInit{
 })
 export class DeleteUserDialog {
 
-  constructor(private userService: UserService, @Inject(MAT_DIALOG_DATA) public data: User) { }
+  constructor(private userService: UserService, @Inject(MAT_DIALOG_DATA) public data: User, private snackBar: MatSnackBar) { }
 
   onSubmit(userTsid: string) {
 
     this.userService.deleteUser(userTsid).subscribe(
       {
-        next: (response: User) => {
-          console.log("deleted user")
-          console.log(response)
+        next: () => {
+          this.snackBar.open('User deleted', 'Close', {
+            duration: 1500
+          })
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     );
@@ -240,7 +259,7 @@ export class ContactTypesDialog implements OnInit{
 
   public contactTypes: ContactType[] = [];
 
-  constructor(private contactService: ContactService) {}
+  constructor(private contactService: ContactService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.getContactTypes();
@@ -253,7 +272,9 @@ export class ContactTypesDialog implements OnInit{
           this.contactTypes = response;
       },
         error: (error: HttpErrorResponse) => {
-          console.log(error);
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          });
         }
       }
     )
@@ -266,7 +287,9 @@ export class ContactTypesDialog implements OnInit{
           this.getContactTypes();
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error);
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          });
         }
       }
     )

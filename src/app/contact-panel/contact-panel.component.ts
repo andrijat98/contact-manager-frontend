@@ -10,6 +10,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {NgForm} from "@angular/forms";
 import {ContactType} from "../interfaces/contact-type.interface";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-contact-panel',
@@ -20,11 +21,9 @@ import {ContactType} from "../interfaces/contact-type.interface";
 })
 export class ContactPanelComponent implements OnInit {
 
-  constructor(private contactService: ContactService, private dialog: MatDialog) { }
+  constructor(private contactService: ContactService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   public contacts: Contact[] = [];
-
-  public panelOpenState = false;
 
   ngOnInit(): void {
     this.getContacts();
@@ -37,7 +36,9 @@ export class ContactPanelComponent implements OnInit {
           this.contacts = result;
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     )
@@ -82,7 +83,7 @@ export class AddContactDialog implements OnInit{
 
   contactTypes: ContactType[] = [];
 
-  constructor(private contactService: ContactService) { }
+  constructor(private contactService: ContactService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getAllContactTypes();
@@ -95,7 +96,9 @@ export class AddContactDialog implements OnInit{
           this.contactTypes = result;
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     )
@@ -108,10 +111,16 @@ export class AddContactDialog implements OnInit{
     this.contactService.addContact(formValue).subscribe(
       {
         next: (response: Contact) => {
-          console.log(response)
+          this.snackBar.open('Contact ' + response.firstName + ' added', 'Close', {
+            duration: 1500
+          })
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          const keys = Object.keys(error.error);
+          const errorMessage = error.error[keys[keys.length - 1]];
+          this.snackBar.open(errorMessage, 'Close', {
+            duration: 5000
+          })
         }
       }
     );
@@ -127,7 +136,7 @@ export class EditContactDialog implements OnInit{
 
   contactTypes: ContactType[] = [];
 
-  constructor(private contactService: ContactService, @Inject(MAT_DIALOG_DATA) public data: Contact) { }
+  constructor(private contactService: ContactService, @Inject(MAT_DIALOG_DATA) public data: Contact, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
         this.getAllContactTypes();
@@ -140,7 +149,9 @@ export class EditContactDialog implements OnInit{
           this.contactTypes = result;
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     )
@@ -154,11 +165,16 @@ export class EditContactDialog implements OnInit{
     this.contactService.editContact(formValue).subscribe(
       {
         next: (response: Contact) => {
-          console.log("updated contact")
-          console.log(response)
+          this.snackBar.open('Contact ' + response.firstName + ' edited', 'Close', {
+            duration: 1500
+          })
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          const keys = Object.keys(error.error);
+          const errorMessage = error.error[keys[keys.length - 1]];
+          this.snackBar.open(errorMessage, 'Close', {
+            duration: 5000
+          })
         }
       }
     );
@@ -172,18 +188,21 @@ export class EditContactDialog implements OnInit{
 })
 export class DeleteContactDialog {
 
-  constructor(private contactService: ContactService, @Inject(MAT_DIALOG_DATA) public data: Contact) { }
+  constructor(private contactService: ContactService, @Inject(MAT_DIALOG_DATA) public data: Contact, private snackBar: MatSnackBar) { }
 
   onSubmit(contactTsid: string) {
 
     this.contactService.deleteContact(contactTsid).subscribe(
       {
-        next: (response: Contact) => {
-          console.log("deleted contact")
-          console.log(response)
+        next: () => {
+          this.snackBar.open('Contact deleted', 'Close', {
+            duration: 1500
+          })
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     );

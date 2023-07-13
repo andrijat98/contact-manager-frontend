@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {User} from "../interfaces/user.interface";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpClient, private router:Router) { }
+  constructor(private http: HttpClient, private router:Router, private snackBar: MatSnackBar) { }
 
   public requestHeader:HttpHeaders = new HttpHeaders();
   public loggedInUser: User = {} as User;
@@ -22,8 +23,9 @@ export class LoginService {
     this.http.get("http://localhost:8080/login", {headers: requestHeader}).subscribe(
       {
         next: (response: any) => {
-          console.log('Login successful');
-          console.log(requestHeader);
+          this.snackBar.open('Successful login', 'Close', {
+            duration: 1500
+          })
           this.loggedInUser.tsid = response.tsid;
           this.loggedInUser.firstName = response.firstName;
           this.loggedInUser.lastName = response.lastName;
@@ -38,7 +40,9 @@ export class LoginService {
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message)
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
         }
       }
     );
