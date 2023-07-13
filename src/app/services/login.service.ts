@@ -13,17 +13,17 @@ export class LoginService {
   public requestHeader:HttpHeaders = new HttpHeaders();
   public loggedInUser: User = {} as User;
 
-  public login(loginData:any) {
+  public login() {
 
-    const credentials = loginData.value.username + ":" + loginData.value.password;
-    const requestHeader = new HttpHeaders(
-      {'Authorization': 'Basic ' + btoa(credentials)}
+    const requestHeader: HttpHeaders = new HttpHeaders(
+      {'Authorization': 'Basic ' + localStorage.getItem('credentials')}
     );
 
     this.http.get("http://localhost:8080/login", {headers: requestHeader}).subscribe(
       {
         next: (response: any) => {
           console.log('Login successful');
+          console.log(requestHeader);
           this.loggedInUser.tsid = response.tsid;
           this.loggedInUser.firstName = response.firstName;
           this.loggedInUser.lastName = response.lastName;
@@ -48,6 +48,7 @@ export class LoginService {
     this.requestHeader = new HttpHeaders();
     this.loggedInUser.isLoggedIn = false;
     this.loggedInUser = {} as User;
+    localStorage.removeItem('credentials');
     this.router.navigate(['/login']).then();
   }
 

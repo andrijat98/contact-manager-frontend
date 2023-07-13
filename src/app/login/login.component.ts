@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -15,15 +15,16 @@ import {LoginService} from "../services/login.service";
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatSelectModule, FormsModule, MatButtonModule, MatDividerModule, MatIconModule],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   constructor(private loginService: LoginService) { }
 
-  ngOnInit(): void {
-  }
-
   onSubmit(loginForm: NgForm) {
-    this.loginService.login(loginForm)
+
+    const credentials = loginForm.value.username + ":" + loginForm.value.password;
+
+    localStorage.setItem('credentials', btoa(credentials))
+    this.loginService.login();
   }
 
 }

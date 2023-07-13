@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -76,4 +76,5 @@ const appRoutes: Routes = [
     MatCheckboxModule,
   ]
 })
-export class AppModule { }
+export class AppModule{
+}

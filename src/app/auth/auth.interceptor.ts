@@ -6,30 +6,25 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {LoginService} from "../services/login.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private loginService: LoginService) {}
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if(!request.headers.has('Authorization') ) {
+    const credentials = localStorage.getItem('credentials')
+    if(credentials) {
       //console.log("Request doesn't have auth header")
       //console.log(this.loginService.requestHeader)
-      const authorization = this.loginService.requestHeader.get('Authorization');
-      //console.log(authorization);
-      if(authorization) {
+      //const authorization = this.loginService.requestHeader.get('Authorization');
         request = request.clone(
           {
             setHeaders: {
-              Authorization : authorization
+              Authorization : 'Basic ' + credentials
             }
           }
         );
-      }
     }
     return next.handle(request).pipe();
   }
