@@ -8,22 +8,27 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
-import {NgForm} from "@angular/forms";
+import {FormsModule, NgForm} from "@angular/forms";
 import {ContactType} from "../interfaces/contact-type.interface";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
 
 @Component({
   selector: 'app-contact-panel',
   templateUrl: './contact-panel.component.html',
   styleUrls: ['./contact-panel.component.css'],
   standalone: true,
-  imports: [MatExpansionModule, NgForOf, MatIconModule, MatPaginatorModule, MatButtonModule]
+  imports: [MatExpansionModule, NgForOf, MatIconModule, MatPaginatorModule, MatButtonModule, FormsModule, MatFormFieldModule, MatInputModule, MatSelectModule]
 })
 export class ContactPanelComponent implements OnInit {
 
   constructor(private contactService: ContactService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   public contacts: Contact[] = [];
+  selectedSearchParameter: string = 'firstName';
+  selectedSortBy: string = 'firstName';
 
   ngOnInit(): void {
     this.getContacts();
@@ -42,6 +47,33 @@ export class ContactPanelComponent implements OnInit {
         }
       }
     )
+  }
+
+  searchContact(searchContactForm: NgForm) {
+
+    const formValue = searchContactForm.value;
+    formValue.page = 0;
+    formValue.size = 10;
+    console.log(formValue);
+    this.contactService.searchContacts(searchContactForm.value).subscribe(
+      {
+        next: (result: Contact[]) => {
+          this.contacts = result;
+          if (this.contacts.length === 0) {
+            this.snackBar.open('No contacts found', 'Close', {
+              duration: 3000
+            })
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          const keys = Object.keys(error.error);
+          const errorMessage = error.error[keys[keys.length - 1]];
+          this.snackBar.open(errorMessage, 'Close', {
+            duration: 5000
+          })
+        }
+      }
+    );
   }
 
   openAddDialog() {

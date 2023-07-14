@@ -1,5 +1,37 @@
 <div class="contact-panel">
   <div id="add-contact">
+    <div id="search-tools">
+      <div id="search-flexbox">
+        <button class="add-contact-text" mat-raised-button color="primary" (click)="searchContact(searchContactForm)">
+          <mat-icon id="search-icon">search</mat-icon>
+          <span>Search contact</span>
+        </button>
+      <form #searchContactForm="ngForm">
+        <mat-form-field class="form-field" id="keyword-field" appearance="fill">
+          <mat-label>Search keyword</mat-label>
+          <input matInput type="text" ngModel name="searchKeyword">
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Search parameter</mat-label>
+          <mat-select [(ngModel)]="selectedSearchParameter" name="searchParameter">
+            <mat-option value="firstName">First name</mat-option>
+            <mat-option value="lastName">Last name</mat-option>
+            <mat-option value="address">Address</mat-option>
+            <mat-option value="phoneNumber">Phone number</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Sort by</mat-label>
+          <mat-select value="firstName" [(ngModel)]="selectedSortBy" name="sortBy">
+            <mat-option value="firstName">First name</mat-option>
+            <mat-option value="lastName">Last name</mat-option>
+            <mat-option value="address">Address</mat-option>
+            <mat-option value="phoneNumber">Phone number</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      </div>
+    </div>
     <button class="add-contact-text" mat-raised-button color="primary" (click)="openAddDialog()">
       <mat-icon id="add-icon">add</mat-icon>
       <span>Add contact</span>

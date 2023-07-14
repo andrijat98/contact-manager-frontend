@@ -36,4 +36,8 @@ export class ContactService {
   public addContactType(contactType: FormData) {
     return this.http.post<ContactType>(`${this.serverUrl}/contact-type/add`, contactType);
   }
+
+  public searchContacts(searchData: FormData): Observable<Contact[]> {
+    return this.http.post<Contact[]>(`${this.serverUrl}/contact/search`, searchData);
+  }
 }

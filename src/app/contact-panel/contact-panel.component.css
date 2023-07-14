@@ -11,9 +11,22 @@
   display: flex;
   align-items: center;
   text-align: center;
-  margin-left: auto;
-  justify-content: flex-end;
-  padding-bottom: 10px;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+#search-flexbox {
+  display: flex;
+  align-items: center;
+}
+
+.form-field {
+  height: 30px;
+  margin-left: 10px;
+}
+
+#keyword-field {
+  top: -5px;
 }
 
 .add-contact-text {
