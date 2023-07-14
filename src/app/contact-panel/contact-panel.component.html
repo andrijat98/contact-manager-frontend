@@ -65,6 +65,9 @@
       <p><span class="bolded-text">Contact type: </span> {{ contact.contactType }}</p><hr/>
     </mat-expansion-panel>
   </mat-accordion>
+  <button id="export-csv-button" mat-raised-button color="primary" (click)="downloadCsvFile()">
+    <span>Export contacts (CSV)</span>
+  </button>
   <mat-paginator [length]="100"
                  [pageSize]="10"
                  [pageSizeOptions]="[5, 10, 25, 50]"

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Contact} from "../interfaces/contact.interface";
 import {ContactType} from "../interfaces/contact-type.interface";
@@ -39,5 +39,17 @@ export class ContactService {
 
   public searchContacts(searchData: FormData): Observable<Contact[]> {
     return this.http.post<Contact[]>(`${this.serverUrl}/contact/search`, searchData);
+  }
+
+  public getCsvFile(): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.append('Accept', 'text/csv');
+    headers = headers.append("Content-disposition", "attachment; filename=contacts.csv")
+
+    return this.http.get(`${this.serverUrl}/contact/exportcsv`, {
+      headers: headers,
+      responseType: 'text',
+      observe: 'response'
+    });
   }
 }

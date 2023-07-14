@@ -76,6 +76,34 @@ export class ContactPanelComponent implements OnInit {
     );
   }
 
+  downloadCsvFile() {
+    this.contactService.getCsvFile().subscribe(
+      {
+        next: (result) => {
+          if (result.body) {
+            console.log(result.body);
+            this.saveFile(result.body);
+          }
+
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
+          this.snackBar.open('Error while exporting csv file', 'Close', {
+            duration: 5000
+          })
+        }
+      }
+    );
+  }
+
+  saveFile(data: any) {
+    const blob = new Blob([data], {type: 'text/csv'});
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'contacts.csv';
+    link.click();
+  }
+
   openAddDialog() {
     const dialogRef = this.dialog.open(AddContactDialog);
     dialogRef.afterClosed().subscribe(() => {
