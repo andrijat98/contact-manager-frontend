@@ -8,4 +8,5 @@ export interface User {
   phoneNumber: string;
   roles: UserRole[];
   isLoggedIn: boolean;
+  isPhoneVerified: boolean;
 }

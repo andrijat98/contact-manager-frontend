@@ -5,6 +5,7 @@
       <span class="spacer"></span>
       <div *ngIf="loggedInUser.isLoggedIn" class="welcome">
         <span>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }}</span>
+        <mat-icon id="edit-icon" (click)="openEditUserDialog()">edit</mat-icon>
       </div>
       <div *ngIf="!loggedInUser.isLoggedIn" class="login" routerLink="/login">
         <span>Login</span>

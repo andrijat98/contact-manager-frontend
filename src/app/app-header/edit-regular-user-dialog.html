@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Edit user</h2>
+<mat-dialog-content class="mat-typography">
+  <form #updateUserForm="ngForm">
+    <table class="full-width">
+      <tr>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" id="firstName" ngModel name="firstName" [(ngModel)]="data.firstName">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" id="lastName" ngModel name="lastName" [(ngModel)]="data.lastName">
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" id="password" ngModel name="password">
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Phone Number</mat-label>
+      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber" [(ngModel)]="data.phoneNumber">
+    </mat-form-field>
+    <div class="flex-phone-verify">
+      <mat-icon *ngIf="data.isPhoneVerified" style="color: darkgreen">mobile_friendly</mat-icon>
+      <mat-icon *ngIf="!data.isPhoneVerified" style="color: darkred">phonelink_erase</mat-icon>
+      <p class="phone-verify" *ngIf="data.isPhoneVerified" style="color: darkgreen; margin-left: 5px">Current phone number verified.</p>
+      <p class="phone-verify" *ngIf="!data.isPhoneVerified" style="color: darkred; margin-left: 5px">Current phone number not verified.</p>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close="">Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit(updateUserForm)">Submit</button>
+</mat-dialog-actions>

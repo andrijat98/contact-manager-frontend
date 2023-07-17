@@ -30,8 +30,10 @@ export class LoginService {
           this.loggedInUser.firstName = response.firstName;
           this.loggedInUser.lastName = response.lastName;
           this.loggedInUser.email = response.email;
+          this.loggedInUser.phoneNumber = response.phoneNumber;
           this.loggedInUser.roles = response.roles;
           this.loggedInUser.isLoggedIn = true;
+          this.loggedInUser.isPhoneVerified = response.isPhoneVerified;
           this.requestHeader = requestHeader;
           if(this.checkIfAdmin()) {
             this.router.navigate(['/users']).then()
@@ -43,6 +45,7 @@ export class LoginService {
           this.snackBar.open(error.message, 'Close', {
             duration: 3000
           })
+          this.router.navigate(['/login']).then();
         }
       }
     );

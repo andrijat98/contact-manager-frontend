@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { LoginComponent } from './login/login.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AppHeaderComponent} from "./app-header/app-header.component";
+import {AppHeaderComponent, EditRegularUserDialog} from "./app-header/app-header.component";
 import {RouterModule, Routes} from "@angular/router";
 import {
   AddContactDialog,
@@ -31,6 +31,7 @@ import {
 } from './admin-panel/admin-panel.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatIconModule} from "@angular/material/icon";
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     EditUserDialog,
     DeleteUserDialog,
     AddUserDialog,
-    ContactTypesDialog
+    ContactTypesDialog,
+    EditRegularUserDialog
   ],
   providers: [
     {
@@ -75,7 +77,8 @@ const appRoutes: Routes = [
     MatSelectModule,
     AdminPanelComponent,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule
   ]
 })
 export class AppModule{

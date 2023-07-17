@@ -15,4 +15,12 @@
 .welcome {
   color: #ffd966;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+#edit-icon {
+  margin-left: 5px;
+  color: orange;
+  cursor: pointer;
 }

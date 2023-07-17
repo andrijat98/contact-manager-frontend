@@ -37,3 +37,17 @@ h2 {
   font-size: 1.3em;
   background-color: rgba(0,0,0,.04);
 }
+
+.flex-phone-verify {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-phone-verify p {
+  margin: 0;
+}
+
+.phone-verify {
+  text-align: center;
+}
