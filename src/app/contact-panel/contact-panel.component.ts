@@ -28,6 +28,7 @@ export class ContactPanelComponent implements OnInit {
 
   public contacts: Contact[] = [];
   private fileToUpload: File | null = null;
+  public fileName: string = '';
   selectedSearchParameter: string = 'firstName';
   selectedSortBy: string = 'firstName';
 
@@ -131,7 +132,9 @@ export class ContactPanelComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.fileToUpload = event.target.files[0];
-    console.log(this.fileToUpload);
+    if(this.fileToUpload) {
+      this.fileName = this.fileToUpload.name;
+    }
   }
 
   openAddDialog() {

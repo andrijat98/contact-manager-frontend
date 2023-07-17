@@ -72,3 +72,17 @@
 #export-csv-button {
   margin-top: 20px;
 }
+
+.csv-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-upload {
+  display: inline;
+}
+
+#file {
+  display: none;
+}

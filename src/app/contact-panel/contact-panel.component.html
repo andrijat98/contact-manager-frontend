@@ -65,13 +65,19 @@
       <p><span class="bolded-text">Contact type: </span> {{ contact.contactType }}</p><hr/>
     </mat-expansion-panel>
   </mat-accordion>
-  <button id="export-csv-button" mat-raised-button color="primary" (click)="downloadCsvFile()">
-    <span>Export contacts (CSV)</span>
-  </button>
-  <div>
-      <label for="file">Upload CSV file</label>
-      <input type="file" id="file" accept="text/csv" ngModel name="file" (change)="onFileSelected($event)">
-    <button (click)="uploadCsvFile()">Submit</button>
+  <div class="csv-flex">
+    <button id="export-csv-button" mat-raised-button color="primary" (click)="downloadCsvFile()">
+      <span>Export contacts (CSV)</span>
+    </button>
+    <input type="file" id="file" accept="text/csv" ngModel name="file" (change)="onFileSelected($event)" #fileUpload>
+    <div class="file-upload">
+      <button style="width: 100px" mat-icon-button color="primary" class="upload-btn" (click)="fileUpload.click()">
+        Attach file
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <span style="margin-right: 10px">{{fileName || "No file uploaded yet."}}</span>
+      <button mat-raised-button color="warn" (click)="uploadCsvFile()">Upload CSV file</button>
+    </div>
   </div>
   <mat-paginator [length]="100"
                  [pageSize]="10"
