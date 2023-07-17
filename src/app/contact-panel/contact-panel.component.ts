@@ -115,6 +115,8 @@ export class ContactPanelComponent implements OnInit {
               duration: 5000
             })
             this.getContacts();
+            this.fileToUpload = null;
+            this.fileName = '';
           },
           error: (error: HttpErrorResponse) => {
             this.snackBar.open(error.message, 'Close', {
