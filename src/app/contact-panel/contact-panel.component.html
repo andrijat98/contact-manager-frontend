@@ -68,6 +68,11 @@
   <button id="export-csv-button" mat-raised-button color="primary" (click)="downloadCsvFile()">
     <span>Export contacts (CSV)</span>
   </button>
+  <div>
+      <label for="file">Upload CSV file</label>
+      <input type="file" id="file" accept="text/csv" ngModel name="file" (change)="onFileSelected($event)">
+    <button (click)="uploadCsvFile()">Submit</button>
+  </div>
   <mat-paginator [length]="100"
                  [pageSize]="10"
                  [pageSizeOptions]="[5, 10, 25, 50]"

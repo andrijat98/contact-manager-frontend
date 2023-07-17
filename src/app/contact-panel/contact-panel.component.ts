@@ -27,6 +27,7 @@ export class ContactPanelComponent implements OnInit {
   constructor(private contactService: ContactService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   public contacts: Contact[] = [];
+  private fileToUpload: File | null = null;
   selectedSearchParameter: string = 'firstName';
   selectedSortBy: string = 'firstName';
 
@@ -102,6 +103,35 @@ export class ContactPanelComponent implements OnInit {
     link.href = window.URL.createObjectURL(blob);
     link.download = 'contacts.csv';
     link.click();
+  }
+
+  uploadCsvFile() {
+    if (this.fileToUpload) {
+      this.contactService.uploadCsvFile(this.fileToUpload).subscribe(
+        {
+          next: (result) => {
+            this.snackBar.open(result, 'Close', {
+              duration: 5000
+            })
+            this.getContacts();
+          },
+          error: (error: HttpErrorResponse) => {
+            this.snackBar.open(error.message, 'Close', {
+              duration: 5000
+            })
+          }
+        }
+      )
+    } else {
+      this.snackBar.open('Please select a .csv file', 'Close', {
+        duration: 5000
+      })
+    }
+  }
+
+  onFileSelected(event: any) {
+    this.fileToUpload = event.target.files[0];
+    console.log(this.fileToUpload);
   }
 
   openAddDialog() {

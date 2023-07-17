@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Contact} from "../interfaces/contact.interface";
 import {ContactType} from "../interfaces/contact-type.interface";
 
@@ -51,5 +51,25 @@ export class ContactService {
       responseType: 'text',
       observe: 'response'
     });
+  }
+
+  public uploadCsvFile(file: File): Observable<string> {
+    let headers = new HttpHeaders().append('Accept', 'text/plain');
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.post(`${this.serverUrl}/contact/importcsv`, formData,{
+      headers: headers,
+      responseType: 'arraybuffer',
+      observe: "response"
+    }).pipe(
+      map(response => {
+        const decoder = new TextDecoder('utf-8');
+        let text = '';
+        if (response.body) {
+          text = decoder.decode(response.body);
+        }
+        return text;
+      })
+    );
   }
 }
