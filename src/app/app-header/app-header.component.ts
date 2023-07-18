@@ -10,6 +10,7 @@ import {User} from "../interfaces/user.interface";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {HttpErrorResponse} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
+import {ContactService} from "../services/contact.service";
 
 @Component({
   selector: 'app-header',
@@ -29,18 +30,11 @@ export class AppHeaderComponent implements OnInit {
   onLogout() {
     this.loginService.logout();
     this.loggedInUser = this.loginService.loggedInUser;
-    console.log("Logged out");
   }
 
   openEditUserDialog() {
     let userData: User = {...this.loggedInUser};
-    console.log(this.loggedInUser)
-    const dialogRef = this.dialog.open(EditRegularUserDialog, {data: userData});
-    dialogRef.afterClosed().subscribe(() => {
-      setTimeout(() => {
-        this.loginService.login();
-      },1000);
-    });
+    this.dialog.open(EditRegularUserDialog, {data: userData, disableClose: true});
   }
 }
 
@@ -51,7 +45,16 @@ export class AppHeaderComponent implements OnInit {
 })
 export class EditRegularUserDialog {
 
-  constructor(private userService: UserService, @Inject(MAT_DIALOG_DATA) public data: User, private snackBar: MatSnackBar) { }
+  constructor(
+    private userService: UserService,
+    @Inject(MAT_DIALOG_DATA) public data: User,
+    private snackBar: MatSnackBar,
+    private contactService: ContactService,
+    private loginService: LoginService
+  ) { }
+
+  public isVerified: boolean = this.loginService.loggedInUser.isPhoneVerified;
+  public codeFormShown: boolean = false;
 
   onSubmit(updateUserForm: NgForm) {
 
@@ -64,6 +67,7 @@ export class EditRegularUserDialog {
     this.userService.updateUser(formValue).subscribe(
       {
         next: () => {
+          this.loginService.login();
           this.snackBar.open('Your user info has been updated', 'Close', {
             duration: 1500
           })
@@ -77,5 +81,37 @@ export class EditRegularUserDialog {
         }
       }
     );
+  }
+
+  onVerifyPhoneNumber() {
+    this.contactService.verifyPhoneNumber().subscribe(
+      {
+        next: () => {
+          this.codeFormShown = true;
+        },
+        error: () => {
+          this.snackBar.open('Verification failed, request a new verification code', 'Close', {
+            duration: 5000
+          })
+        }
+      }
+    )
+  }
+
+  onSendVerificationCode(verifyPhoneForm: NgForm) {
+    const code: string = verifyPhoneForm.value.verificationCode;
+    this.contactService.sendVerificationCode(code).subscribe(
+      {
+        next: () => {
+          this.loginService.login();
+          this.isVerified = true;
+        },
+        error: () => {
+          this.snackBar.open('Incorrect or expired code', 'Close', {
+            duration: 5000
+          })
+        }
+      }
+    )
   }
 }

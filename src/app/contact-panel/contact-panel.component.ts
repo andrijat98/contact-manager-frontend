@@ -140,7 +140,7 @@ export class ContactPanelComponent implements OnInit {
   }
 
   openAddDialog() {
-    const dialogRef = this.dialog.open(AddContactDialog);
+    const dialogRef = this.dialog.open(AddContactDialog, {disableClose: true});
     dialogRef.afterClosed().subscribe(() => {
       setTimeout(() => {
         this.getContacts();
@@ -150,7 +150,7 @@ export class ContactPanelComponent implements OnInit {
 
   openEditDialog(contact: Contact) {
     let contactData: Contact = {...contact};
-    const dialogRef = this.dialog.open(EditContactDialog, {data: contactData});
+    const dialogRef = this.dialog.open(EditContactDialog, {data: contactData, disableClose: true});
     dialogRef.afterClosed().subscribe(() => {
       setTimeout(() => {
         this.getContacts();
@@ -160,7 +160,7 @@ export class ContactPanelComponent implements OnInit {
 
   openDeleteDialog(contact: Contact) {
     let contactData: Contact = {...contact};
-    const dialogRef = this.dialog.open(DeleteContactDialog, {data: contactData});
+    const dialogRef = this.dialog.open(DeleteContactDialog, {data: contactData, disableClose: true});
     dialogRef.afterClosed().subscribe(() => {
       setTimeout(() => {
         this.getContacts();

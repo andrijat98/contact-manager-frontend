@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Contact} from "../interfaces/contact.interface";
 import {ContactType} from "../interfaces/contact-type.interface";
@@ -71,5 +71,13 @@ export class ContactService {
         return text;
       })
     );
+  }
+
+  public verifyPhoneNumber(): Observable<HttpResponse<any>> {
+    return this.http.get<HttpResponse<any>>(`${this.serverUrl}/verification/get-phone-verification-code`);
+  }
+
+  public sendVerificationCode(code: String): Observable<HttpResponse<any>> {
+    return this.http.get<HttpResponse<any>>(`${this.serverUrl}/verification/verify-phone/${code}`);
   }
 }

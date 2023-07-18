@@ -23,9 +23,6 @@ export class LoginService {
     this.http.get("http://localhost:8080/login", {headers: requestHeader}).subscribe(
       {
         next: (response: any) => {
-          this.snackBar.open('Successful login', 'Close', {
-            duration: 1500
-          })
           this.loggedInUser.tsid = response.tsid;
           this.loggedInUser.firstName = response.firstName;
           this.loggedInUser.lastName = response.lastName;

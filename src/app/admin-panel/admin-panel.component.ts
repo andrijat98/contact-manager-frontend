@@ -53,7 +53,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   openAddDialog() {
-    const dialogRef = this.dialog.open(AddUserDialog);
+    const dialogRef = this.dialog.open(AddUserDialog, {disableClose: true});
     dialogRef.afterClosed().subscribe(() => {
       setTimeout(() => {
         this.getAllUsers();
@@ -63,7 +63,7 @@ export class AdminPanelComponent implements OnInit {
 
   openEditDialog(user: User) {
     let userData: User = {...user};
-    const dialogRef = this.dialog.open(EditUserDialog, {data: userData});
+    const dialogRef = this.dialog.open(EditUserDialog, {data: userData, disableClose: true});
     dialogRef.afterClosed().subscribe(() => {
       setTimeout(() => {
         this.getAllUsers();
@@ -73,7 +73,7 @@ export class AdminPanelComponent implements OnInit {
 
   openDeleteDialog(user: User) {
     let userData: User = {...user};
-    const dialogRef = this.dialog.open(DeleteUserDialog, {data: userData});
+    const dialogRef = this.dialog.open(DeleteUserDialog, {data: userData, disableClose: true});
     dialogRef.afterClosed().subscribe(() => {
       setTimeout(() => {
         this.getAllUsers();
@@ -83,7 +83,7 @@ export class AdminPanelComponent implements OnInit {
 
   openAddContactTypeDialog() {
     const dialogRef = this.dialog.open(ContactTypesDialog, {
-      width: '500px'
+      width: '500px', disableClose: true
     });
     dialogRef.afterClosed().subscribe(() => {
       setTimeout(() => {
