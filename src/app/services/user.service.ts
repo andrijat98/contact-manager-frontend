@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../interfaces/user.interface";
 import {UserRole} from "../interfaces/userRole.interface";
+import {Count} from "../interfaces/count.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,9 @@ export class UserService {
 
   public getAllUserRoles(): Observable<UserRole[]> {
     return this.http.get<UserRole[]>(`${this.serverUrl}/user/get-roles`);
+  }
+
+  public countUsers(): Observable<Count> {
+    return this.http.get<Count>(`${this.serverUrl}/user/count`);
   }
 }

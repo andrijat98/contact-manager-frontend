@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Contact} from "../interfaces/contact.interface";
 import {ContactType} from "../interfaces/contact-type.interface";
+import {Count} from "../interfaces/count.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,9 @@ export class ContactService {
 
   public sendVerificationCode(code: String): Observable<HttpResponse<any>> {
     return this.http.get<HttpResponse<any>>(`${this.serverUrl}/verification/verify-phone/${code}`);
+  }
+
+  public countContacts(): Observable<Count> {
+    return this.http.get<Count>(`${this.serverUrl}/contact/count`);
   }
 }
