@@ -53,12 +53,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   openAddDialog() {
-    const dialogRef = this.dialog.open(AddUserDialog, {disableClose: true});
-    dialogRef.afterClosed().subscribe(() => {
-      setTimeout(() => {
-        this.getAllUsers();
-      },1000);
-    });
+    this.dialog.open(AddUserDialog, {disableClose: true});
   }
 
   openEditDialog(user: User) {
@@ -102,7 +97,7 @@ export class AddUserDialog implements OnInit{
 
   userRoles: UserRole[] = [];
 
-  constructor(private userService: UserService, private snackBar: MatSnackBar) { }
+  constructor(private userService: UserService, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.getAllUserRoles();
@@ -139,7 +134,7 @@ export class AddUserDialog implements OnInit{
         next: (response: User) => {
           this.snackBar.open('User ' + response.firstName + ' added', 'Close', {
             duration: 1500
-          })
+          });
         },
         error: (error: HttpErrorResponse) => {
           const keys = Object.keys(error.error);

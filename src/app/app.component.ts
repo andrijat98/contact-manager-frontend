@@ -13,7 +13,6 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     const credentials = localStorage.getItem('credentials');
     if (credentials) {
-      console.log(credentials);
       this.loginService.login();
     }
   }

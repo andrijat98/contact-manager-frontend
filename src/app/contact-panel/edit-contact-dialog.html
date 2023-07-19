@@ -5,25 +5,62 @@
         <td>
           <mat-form-field class="full-width" appearance="fill">
             <mat-label>First Name</mat-label>
-            <input matInput type="text" id="firstName" ngModel name="firstName" [(ngModel)]="data.firstName">
+            <input matInput type="text" id="firstName" ngModel name="firstName" [(ngModel)]="data.firstName" maxlength="20" pattern="^[a-zA-Z]+$" #firstName="ngModel">
           </mat-form-field>
         </td>
         <td>
           <mat-form-field class="full-width" appearance="fill">
             <mat-label>Last Name</mat-label>
-            <input matInput type="text" id="lastName" ngModel name="lastName" [(ngModel)]="data.lastName">
+            <input matInput type="text" id="lastName" ngModel name="lastName" [(ngModel)]="data.lastName" maxlength="20" pattern="[a-zA-Z]+$" #lastName="ngModel">
           </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert">
+            <div *ngIf="firstName.errors?.['maxlength']">
+              First name can be up to 20 characters long.
+            </div>
+            <div *ngIf="firstName.errors?.['pattern']">
+              First name can only contain letters of the alphabet without spaces.
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert">
+            <div *ngIf="lastName.errors?.['maxlength']">
+              Last name can be up to 20 characters long.
+            </div>
+            <div *ngIf="lastName.errors?.['pattern']">
+              Last name can only contain letters of the alphabet without spaces.
+            </div>
+          </div>
         </td>
       </tr>
     </table>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Address</mat-label>
-      <input matInput type="text" id="address" ngModel name="address" [(ngModel)]="data.address">
+      <input matInput type="text" id="address" ngModel name="address" [(ngModel)]="data.address" maxlength="30" pattern="^[a-zA-Z0-9 ]+$" #address="ngModel">
     </mat-form-field>
+    <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert">
+      <div *ngIf="address.errors?.['maxlength']">
+        Address can be up to 30 characters long.
+      </div>
+      <div *ngIf="address.errors?.['pattern']">
+        Address can only contain letters and numbers.
+      </div>
+    </div>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Phone Number</mat-label>
-      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber" [(ngModel)]="data.phoneNumber">
+      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber" [(ngModel)]="data.phoneNumber" pattern="^\+[0-9]{9,14}$" #phoneNumber="ngModel">
     </mat-form-field>
+    <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="alert">
+      <div *ngIf="phoneNumber.errors?.['pattern']">
+        Phone number must have '+' followed by 9 to 14 digits.
+      </div>
+    </div>
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Contact type</mat-label>
       <mat-select id="contactType" ngModel name="contactTypeTsid" [(ngModel)] = data.contactTypeTsid>
@@ -32,9 +69,8 @@
     </mat-form-field>
       <input type="hidden" id="contactTsid" ngModel name="contactTsid" [(ngModel)]="data.contactTsid">
   </form>
-
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close="">Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit(updateContactForm)">Submit</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit(updateContactForm)" [disabled]="!updateContactForm.valid">Submit</button>
 </mat-dialog-actions>

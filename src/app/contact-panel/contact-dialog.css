@@ -7,3 +7,10 @@ form {
 .full-width {
   width: 100%;
 }
+
+.alert {
+  color: darkred;
+  background-color: lightpink;
+  text-align: center;
+  margin-bottom: 10px;
+}

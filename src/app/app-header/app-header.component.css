@@ -24,3 +24,10 @@
   color: orange;
   cursor: pointer;
 }
+
+.alert {
+  color: darkred;
+  background-color: lightpink;
+  text-align: center;
+  margin-bottom: 10px;
+}
