@@ -222,7 +222,6 @@ export class EditUserDialog implements OnInit{
       }
     })
     formValue.userRoleTsids = userRoleTsids;
-    console.log(formValue);
 
     this.userService.updateUser(formValue).subscribe(
       {

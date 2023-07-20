@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {User} from "../interfaces/user.interface";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -38,8 +38,8 @@ export class LoginService {
             this.router.navigate(['/contacts']).then()
           }
         },
-        error: (error: HttpErrorResponse) => {
-          this.snackBar.open(error.message, 'Close', {
+        error: () => {
+          this.snackBar.open('Failed authentication, email or password incorrect.', 'Close', {
             duration: 3000
           })
           this.router.navigate(['/login']).then();
