@@ -14,8 +14,8 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
-  public getAllContacts(): Observable<Contact[]> {
-    return this.http.get<Contact[]>(`${this.serverUrl}/contact/get-all/page/0/size/10/sort-by/firstName`);
+  public getAllContacts(pageIndex: number, pageSize: number): Observable<Contact[]> {
+    return this.http.get<Contact[]>(`${this.serverUrl}/contact/get-all/page/${pageIndex}/size/${pageSize}/sort-by/firstName`);
   }
 
   public addContact(contact: FormData) {

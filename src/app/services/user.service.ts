@@ -14,8 +14,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.serverUrl}/user/get-all/page/0/size/10/sort-by/firstName`);
+  public getAllUsers(pageIndex: number, pageSize:number): Observable<User[]> {
+    return this.http.get<User[]>(`${this.serverUrl}/user/get-all/page/${pageIndex}/size/${pageSize}/sort-by/firstName`);
   }
 
   public addUser(user: FormData) {

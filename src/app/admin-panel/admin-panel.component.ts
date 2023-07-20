@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorModule, PageEvent} from "@angular/material/paginator";
 import {User} from "../interfaces/user.interface";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {UserService} from "../services/user.service";
@@ -13,6 +13,7 @@ import {UserRole} from "../interfaces/userRole.interface";
 import {ContactService} from "../services/contact.service";
 import {ContactType} from "../interfaces/contact-type.interface";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Count} from "../interfaces/count.interface";
 
 @Component({
   selector: 'app-admin-panel',
@@ -30,15 +31,20 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class AdminPanelComponent implements OnInit {
 
   public users: User[] = [];
+  public pageLength: number = 0;
+  public pageIndex: number = 0;
+  public pageSize: number = 10;
 
   constructor(private userService: UserService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.countUsers();
     this.getAllUsers();
   }
 
   getAllUsers() {
-    this.userService.getAllUsers().subscribe(
+    this.countUsers();
+    this.userService.getAllUsers(this.pageIndex, this.pageSize).subscribe(
       {
         next: (result: User[]) => {
           this.users = result;
@@ -50,6 +56,27 @@ export class AdminPanelComponent implements OnInit {
         }
       }
     )
+  }
+
+  countUsers() {
+    this.userService.countUsers().subscribe(
+      {
+        next: (result: Count) => {
+          this.pageLength = result.count;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
+        }
+      }
+    )
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getAllUsers();
   }
 
   openAddDialog() {

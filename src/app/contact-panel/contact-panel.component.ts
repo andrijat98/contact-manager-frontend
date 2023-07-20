@@ -6,7 +6,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {NgForOf} from "@angular/common";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorModule, PageEvent} from "@angular/material/paginator";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {FormsModule, NgForm} from "@angular/forms";
 import {ContactType} from "../interfaces/contact-type.interface";
@@ -14,6 +14,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
+import {Count} from "../interfaces/count.interface";
 
 @Component({
   selector: 'app-contact-panel',
@@ -31,13 +32,18 @@ export class ContactPanelComponent implements OnInit {
   public fileName: string = '';
   selectedSearchParameter: string = 'firstName';
   selectedSortBy: string = 'firstName';
+  public pageLength: number = 0;
+  public pageIndex: number = 0;
+  public pageSize: number = 10;
 
   ngOnInit(): void {
+    this.countContacts();
     this.getContacts();
   }
 
   getContacts(): void {
-    this.contactService.getAllContacts().subscribe(
+    this.countContacts();
+    this.contactService.getAllContacts(this.pageIndex, this.pageSize).subscribe(
       {
         next: (result: Contact[]) => {
           this.contacts = result;
@@ -51,12 +57,32 @@ export class ContactPanelComponent implements OnInit {
     )
   }
 
+  countContacts() {
+    this.contactService.countContacts().subscribe(
+      {
+        next: (result: Count) => {
+          this.pageLength = result.count;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(error.message, 'Close', {
+            duration: 3000
+          })
+        }
+      }
+    )
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getContacts();
+  }
+
   searchContact(searchContactForm: NgForm) {
 
     const formValue = searchContactForm.value;
     formValue.page = 0;
     formValue.size = 10;
-    console.log(formValue);
     this.contactService.searchContacts(searchContactForm.value).subscribe(
       {
         next: (result: Contact[]) => {
