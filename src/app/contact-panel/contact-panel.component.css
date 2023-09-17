@@ -1,0 +1,88 @@
+.mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+.contact-panel {
+  width: 80%;
+  margin: 50px auto;
+}
+
+#add-contact {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+#search-flexbox {
+  display: flex;
+  align-items: center;
+}
+
+.form-field {
+  height: 30px;
+  margin-left: 10px;
+}
+
+#keyword-field {
+  top: -5px;
+}
+
+.add-contact-text {
+  font-size: 1.2em;
+}
+
+.header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: darkgray;
+  font-size: 1.2em;
+}
+
+#name {
+  padding-left: 23px;
+}
+
+#action {
+  padding-right: 23px;
+}
+
+#dummy1 {
+  width: 28%;
+}
+#dummy2 {
+  width: 54.5%;
+}
+
+.bolded-text {
+  font-weight: bold;
+}
+
+#mat-icon {
+  margin-right: 8px;
+}
+
+#add-icon {
+  padding-right: 3px;
+}
+
+#export-csv-button {
+  margin-top: 20px;
+}
+
+.csv-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-upload {
+  display: inline;
+}
+
+#file {
+  display: none;
+}

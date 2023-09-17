@@ -1,0 +1,21 @@
+<header>
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Contact Manager App</span>
+      <span class="spacer"></span>
+      <div *ngIf="loggedInUser.isLoggedIn" class="welcome">
+        <span>{{ loggedInUser.firstName }} {{ loggedInUser.lastName }}</span>
+        <mat-icon id="edit-icon" (click)="openEditUserDialog()">edit</mat-icon>
+      </div>
+      <div *ngIf="!loggedInUser.isLoggedIn" class="login" routerLink="/login">
+        <span>Login</span>
+        <mat-icon class="icon" aria-hidden="false" aria-label="Login icon">login</mat-icon>
+      </div>
+      <div *ngIf="loggedInUser.isLoggedIn" class="logout" (click)="onLogout()">
+        <span>(Logout)</span>
+        <mat-icon class="icon" aria-hidden="false" aria-label="Logout icon">logout</mat-icon>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</header>
+

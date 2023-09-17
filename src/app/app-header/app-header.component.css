@@ -1,0 +1,33 @@
+.login, .logout{
+  display: flex;
+  align-items: center;
+}
+.login:hover, .logout:hover {
+  cursor: pointer;
+}
+.icon {
+  padding: 0 14px;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+.welcome {
+  color: #ffd966;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+#edit-icon {
+  margin-left: 5px;
+  color: orange;
+  cursor: pointer;
+}
+
+.alert {
+  color: darkred;
+  background-color: lightpink;
+  text-align: center;
+  margin-bottom: 10px;
+}

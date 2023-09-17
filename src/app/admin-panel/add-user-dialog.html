@@ -1,0 +1,103 @@
+<h2 mat-dialog-title>Add user</h2>
+<mat-dialog-content class="mat-typography">
+  <form #addUserForm="ngForm">
+    <table class="full-width">
+      <tr>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" id="firstName" ngModel name="firstName" required maxlength="20" pattern="^[a-zA-Z]+$" #firstName="ngModel">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" id="lastName" ngModel name="lastName" required maxlength="20" pattern="[a-zA-Z]+$" #lastName="ngModel">
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert">
+            <div *ngIf="firstName.errors?.['required']">
+              First name is required.
+            </div>
+            <div *ngIf="firstName.errors?.['maxlength']">
+              First name can be up to 20 characters long.
+            </div>
+            <div *ngIf="firstName.errors?.['pattern']">
+              First name can only contain letters of the alphabet without spaces.
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert">
+            <div *ngIf="lastName.errors?.['required']">
+              Last name is required.
+            </div>
+            <div *ngIf="lastName.errors?.['maxlength']">
+              Last name can be up to 20 characters long.
+            </div>
+            <div *ngIf="lastName.errors?.['pattern']">
+              Last name can only contain letters of the alphabet without spaces.
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="text" id="email" ngModel name="email" required email maxlength="30" #email="ngModel">
+    </mat-form-field>
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
+      <div *ngIf="email.errors?.['required']">
+        Email is required.
+      </div>
+      <div *ngIf="email.errors?.['email']">
+        Must be a valid email.
+      </div>
+      <div *ngIf="email.errors?.['maxlength']">
+        Email can be up to 30 characters long.
+      </div>
+    </div>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" id="password" ngModel name="password" required minlength="10" maxlength="20" #password="ngModel">
+    </mat-form-field>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+      <div *ngIf="password.errors?.['required']">
+        Password is required.
+      </div>
+      <div *ngIf="password.errors?.['minlength']">
+        Password must contain at least 10 characters.
+      </div>
+      <div *ngIf="password.errors?.['maxlength']">
+        Password can be up to 20 characters long.
+      </div>
+    </div>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Phone Number</mat-label>
+      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber" required pattern="^\+[0-9]{9,14}$" #phoneNumber="ngModel">
+    </mat-form-field>
+    <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="alert">
+      <div *ngIf="phoneNumber.errors?.['required']">
+        Phone number is required.
+      </div>
+      <div *ngIf="phoneNumber.errors?.['pattern']">
+        Phone number must have '+' followed by 9 to 14 digits.
+      </div>
+    </div>
+      <mat-label>Select user roles</mat-label>
+      <ul>
+        <li *ngFor="let role of userRoles">
+          <mat-checkbox [checked]="role.selected" (change)="role.selected = !role.selected">{{role.roleName}}</mat-checkbox>
+        </li>
+      </ul>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close="" cdkFocusInitial>Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="onSubmit(addUserForm)" [disabled]="!addUserForm.valid">Submit</button>
+</mat-dialog-actions>

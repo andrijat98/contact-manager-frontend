@@ -1,0 +1,60 @@
+.mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+.contact-panel {
+  width: 80%;
+  margin: 50px auto;
+}
+
+#button-panel {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+}
+
+.add-contact-text {
+  font-size: 1.2em;
+}
+
+.header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background-color: darkgray;
+  font-size: 1.2em;
+}
+
+#name {
+  padding-left: 23px;
+}
+
+#action {
+  padding-right: 23px;
+}
+
+#dummy1 {
+  width: 32%;
+}
+#dummy2 {
+  width: 55%;
+}
+
+.bolded-text {
+  font-weight: bold;
+}
+
+#mat-icon {
+  margin-right: 8px;
+}
+
+.add-icon {
+  padding-right: 3px;
+}
+
+#add-user-button {
+  margin-right: 10px;
+}

@@ -1,0 +1,89 @@
+<div class="contact-panel">
+  <div id="add-contact">
+    <div id="search-tools">
+      <div id="search-flexbox">
+        <button class="add-contact-text" mat-raised-button color="primary" (click)="searchContact(searchContactForm)">
+          <mat-icon id="search-icon">search</mat-icon>
+          <span>Search contact</span>
+        </button>
+      <form #searchContactForm="ngForm">
+        <mat-form-field class="form-field" id="keyword-field" appearance="fill">
+          <mat-label>Search keyword</mat-label>
+          <input matInput type="text" ngModel name="searchKeyword">
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Search parameter</mat-label>
+          <mat-select [(ngModel)]="selectedSearchParameter" name="searchParameter">
+            <mat-option value="firstName">First name</mat-option>
+            <mat-option value="lastName">Last name</mat-option>
+            <mat-option value="address">Address</mat-option>
+            <mat-option value="phoneNumber">Phone number</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Sort by</mat-label>
+          <mat-select value="firstName" [(ngModel)]="selectedSortBy" name="sortBy">
+            <mat-option value="firstName">First name</mat-option>
+            <mat-option value="lastName">Last name</mat-option>
+            <mat-option value="address">Address</mat-option>
+            <mat-option value="phoneNumber">Phone number</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      </div>
+    </div>
+    <button class="add-contact-text" mat-raised-button color="primary" (click)="openAddDialog()">
+      <mat-icon id="add-icon">add</mat-icon>
+      <span>Add contact</span>
+    </button>
+  </div>
+  <header class="header">
+    <span class="item" id="name">Name</span>
+    <span id="dummy1"></span>
+    <span class="item" id="number">Phone Number</span>
+    <span id="dummy2"></span>
+    <span class="item" id="action"><b>Action</b></span>
+  </header>
+  <mat-accordion *ngFor="let contact of contacts">
+    <mat-expansion-panel class="contact-list" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ contact.firstName }} {{ contact.lastName }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ contact.phoneNumber }}
+        </mat-panel-description>
+        <div>
+          <mat-icon id="mat-icon" (click)="openEditDialog(contact)">edit</mat-icon>
+          <mat-icon (click)="openDeleteDialog(contact)">delete</mat-icon>
+        </div>
+      </mat-expansion-panel-header><hr/>
+      <p><span class="bolded-text">First name: </span> {{ contact.firstName }}</p><hr/>
+      <p><span class="bolded-text">Last name: </span> {{ contact.lastName }}</p><hr/>
+      <p><span class="bolded-text">Address: </span> {{ contact.address }}</p><hr/>
+      <p><span class="bolded-text">Phone number: </span> {{ contact.phoneNumber }}</p><hr/>
+      <p><span class="bolded-text">Contact type: </span> {{ contact.contactType }}</p><hr/>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div class="csv-flex">
+    <button id="export-csv-button" mat-raised-button color="primary" (click)="downloadCsvFile()">
+      <span>Export contacts (CSV)</span>
+    </button>
+    <input type="file" id="file" accept="text/csv" ngModel name="file" (change)="onFileSelected($event)" #fileUpload>
+    <div class="file-upload">
+      <button style="width: 100px" mat-icon-button color="primary" class="upload-btn" (click)="fileUpload.click()">
+        Attach file
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <span style="margin-right: 10px">{{fileName || "No file uploaded yet."}}</span>
+      <button mat-raised-button color="warn" (click)="uploadCsvFile()">Upload CSV file</button>
+    </div>
+  </div>
+  <mat-paginator [length]="pageLength"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 50]"
+                 aria-label="Select page"
+                 [showFirstLastButtons]=true
+                 (page)="handlePageEvent($event)">
+  </mat-paginator>
+</div>

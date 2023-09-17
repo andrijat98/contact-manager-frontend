@@ -1,0 +1,91 @@
+<h2 mat-dialog-title>Edit user</h2>
+<mat-dialog-content class="mat-typography">
+  <form #updateUserForm="ngForm">
+    <table class="full-width">
+      <tr>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" id="firstName" ngModel name="firstName" [(ngModel)]="data.firstName" maxlength="20" pattern="^[a-zA-Z]+$" #firstName="ngModel">
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" id="lastName" ngModel name="lastName" [(ngModel)]="data.lastName" maxlength="20" pattern="[a-zA-Z]+$" #lastName="ngModel">
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert">
+            <div *ngIf="firstName.errors?.['maxlength']">
+              First name can be up to 20 characters long.
+            </div>
+            <div *ngIf="firstName.errors?.['pattern']">
+              First name can only contain letters of the alphabet without spaces.
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert">
+            <div *ngIf="lastName.errors?.['maxlength']">
+              Last name can be up to 20 characters long.
+            </div>
+            <div *ngIf="lastName.errors?.['pattern']">
+              Last name can only contain letters of the alphabet without spaces.
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" id="password" ngModel name="password" minlength="10" maxlength="20" #password="ngModel">
+    </mat-form-field>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+      <div *ngIf="password.errors?.['minlength']">
+        Password must contain at least 10 characters.
+      </div>
+      <div *ngIf="password.errors?.['maxlength']">
+        Password can be up to 20 characters long.
+      </div>
+    </div>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Phone Number</mat-label>
+      <input matInput type="text" id="phoneNumber" ngModel name="phoneNumber" [(ngModel)]="data.phoneNumber" pattern="^\+[0-9]{9,14}$" #phoneNumber="ngModel">
+    </mat-form-field>
+    <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="alert">
+      <div *ngIf="phoneNumber.errors?.['pattern']">
+        Phone must have '+' followed by 9 to 14 digits.
+      </div>
+    </div>
+    <div class="flex-phone-verify">
+      <mat-icon *ngIf="isVerified" style="color: darkgreen">mobile_friendly</mat-icon>
+      <mat-icon *ngIf="!isVerified" style="color: darkred">phonelink_erase</mat-icon>
+      <p class="phone-verify" *ngIf="isVerified" style="color: darkgreen; margin-left: 5px">Current phone number verified.</p>
+      <p class="phone-verify" *ngIf="!isVerified" style="color: darkred; margin-left: 5px">Current phone number not verified.</p>
+    </div>
+    <div *ngIf="!isVerified" style="text-align: center">
+      <p class="phone-verify" style="color: darkblue; cursor: pointer; margin-top: 10px" (click)="onVerifyPhoneNumber()">Request verification code</p>
+      <form #verifyPhoneForm="ngForm" *ngIf="codeFormShown" id="verify-phone-form">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Verification code:</mat-label>
+          <input matInput type="text" ngModel name="verificationCode" pattern="^\d{6}$" #code="ngModel">
+        </mat-form-field>
+        <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert">
+          <div *ngIf="code.errors?.['pattern']">
+            Code must have exactly 6 digits.
+          </div>
+        </div>
+        <button mat-raised-button color="primary" (click)="onSendVerificationCode(verifyPhoneForm)" [disabled]="!verifyPhoneForm.valid">Send</button>
+      </form>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close="">Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="onSubmit(updateUserForm)">Submit</button>
+</mat-dialog-actions>
