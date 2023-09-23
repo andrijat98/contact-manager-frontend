@@ -1,4 +1,4 @@
-# Contact Manager Backend
+# Contact Manager Frontend
 ### Angular application for managing contact information (Pratice app developed while working as an intern at IngSoftware_). Created to compliment [contact manager backend.](https://github.com/andrijat98/contact-manager-backend)
 
 
